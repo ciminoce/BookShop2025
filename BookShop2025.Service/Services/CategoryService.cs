@@ -17,5 +17,13 @@ namespace BookShop2025.Service.Services
         {
             return _unitOfWork.Categories.GetAll();
         }
+
+        public bool Save(Category category, out List<string> errors)
+        {
+            errors = new List<string>();
+            _unitOfWork.Categories.Add(category);
+            int rowsAffected = _unitOfWork.Complete();
+            return rowsAffected > 0;
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace BookShop2025.Data.Repositories
 
         public void Add(Category category)
         {
-            throw new NotImplementedException();
+            _dbContext.Categories.Add(category);
         }
 
         public void Delete(Category category)

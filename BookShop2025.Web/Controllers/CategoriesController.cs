@@ -1,4 +1,5 @@
 ﻿using BookShop2025.Data.Interfaces;
+using BookShop2025.Entities.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop2025.Web.Controllers
@@ -16,6 +17,33 @@ namespace BookShop2025.Web.Controllers
         {
             var categories = _categoryService.GetAll();
             return View(categories);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (_categoryService.Save(category, out var errors))
+                    {
+                        TempData["success"] = "Register Successfully Added";
+                        return RedirectToAction("Index");
+                    }
+                    return View(category);
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+
+            }
+            return View(category);
         }
     }
 }

@@ -1,5 +1,23 @@
 ﻿@model IEnumerable<Category>
-<h1>Category List</h1>
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>OK!</strong> @TempData["success"].
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<div class="row mb-3">
+    <div class="col-6">
+        <h1>Category List</h1>
+
+    </div>
+    <div class="col-6 text-end">
+        <a class="btn btn-primary" asp-controller="Categories" asp-action="Create">
+            <i class="bi bi-plus-circle"></i>
+            Create New Category
+        </a>
+    </div>
+</div>
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
