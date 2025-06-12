@@ -5,6 +5,13 @@ namespace BookShop2025.Data.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
+        private readonly BookShopDbContext _dbContext;
+
+        public CategoryRepository(BookShopDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void Add(Category category)
         {
             throw new NotImplementedException();
@@ -27,7 +34,7 @@ namespace BookShop2025.Data.Repositories
 
         public IEnumerable<Category> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.Categories.ToList();
         }
 
         public Category? GetById(int id)
