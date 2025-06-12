@@ -1,5 +1,6 @@
 ﻿using BookShop2025.Data.Interfaces;
 using BookShop2025.Entities.Entities;
+using BookShop2025.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop2025.Web.Controllers
@@ -23,10 +24,11 @@ namespace BookShop2025.Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Category category)
+        public IActionResult Create(CatetoryEditVm categoryVm)
         {
             if (ModelState.IsValid)
             {
+                Category category = new Category { CategoryName = categoryVm.CategoryName };
                 try
                 {
                     if (_categoryService.Save(category, out var errors))
@@ -43,7 +45,7 @@ namespace BookShop2025.Web.Controllers
                 }
 
             }
-            return View(category);
+            return View(categoryVm);
         }
     }
 }

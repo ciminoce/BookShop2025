@@ -1,4 +1,7 @@
 using BookShop2025.Ioc;
+using BookShop2025.Web.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace BookShop2025.Web
 {
@@ -11,6 +14,8 @@ namespace BookShop2025.Web
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             DI.Configure(builder.Services, builder.Configuration);
+            builder.Services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
+            builder.Services.AddFluentValidationAutoValidation();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
