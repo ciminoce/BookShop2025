@@ -1,3 +1,5 @@
+using BookShop2025.Ioc;
+
 namespace BookShop2025.Web
 {
     public class Program
@@ -8,7 +10,7 @@ namespace BookShop2025.Web
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            DI.Configure(builder.Services, builder.Configuration);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

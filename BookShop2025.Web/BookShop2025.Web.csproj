@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookShop2025.Ioc\BookShop2025.Ioc.csproj" />
+  </ItemGroup>
+
 </Project>

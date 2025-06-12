@@ -1,5 +1,4 @@
-﻿using BookShop2025.Data.Interfaces;
-using BookShop2025.Entities.Entities;
+﻿using BookShop2025.Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookShop2025.Data
@@ -13,6 +12,6 @@ namespace BookShop2025.Data
         public BookShopDbContext()
         {
         }
-        public DbSet<Category> Categories{ get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
