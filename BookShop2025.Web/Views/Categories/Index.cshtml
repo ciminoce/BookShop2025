@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Category>
+<h1>Category List</h1>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Category Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.CategoryName
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
