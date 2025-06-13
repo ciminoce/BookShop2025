@@ -11,6 +11,12 @@
             <input class="form-control" asp-for="CategoryName" />
             <span class="text-danger" asp-validation-for="CategoryName"></span>
         </div>
+        <div class="mb-3 row p-1">
+            <label class="p-0" asp-for="Description"></label>
+            <textarea class="form-control" asp-for="Description"></textarea>
+            <span class="text-danger" asp-validation-for="Description"></span>
+
+        </div>
         <button class="btn btn-primary" type="submit">
             <i class="bi bi-floppy2-fill"></i>
             Save
