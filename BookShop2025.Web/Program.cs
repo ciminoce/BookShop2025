@@ -1,4 +1,5 @@
 using BookShop2025.Ioc;
+using BookShop2025.Service.Mapping;
 using BookShop2025.Web.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -16,6 +17,8 @@ namespace BookShop2025.Web
             DI.Configure(builder.Services, builder.Configuration);
             builder.Services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
             builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
+            builder.Services.AddAutoMapper(typeof(MappingProfileDto).Assembly);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

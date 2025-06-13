@@ -1,21 +1,26 @@
-﻿using BookShop2025.Data;
+﻿using AutoMapper;
+using BookShop2025.Data;
 using BookShop2025.Data.Interfaces;
 using BookShop2025.Entities.Entities;
+using BookShop2025.Service.DTOs.Category;
 
 namespace BookShop2025.Service.Services
 {
     public class CategoryService : ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public CategoryService(IUnitOfWork unitOfWork)
+        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Category> GetAll()
+        public IEnumerable<CategoryListDto> GetAll()
         {
-            return _unitOfWork.Categories.GetAll();
+            var categories= _unitOfWork.Categories.GetAll();
+            return _mapper.Map<List<CategoryListDto>>(categories);
         }
 
         public bool Save(Category category, out List<string> errors)

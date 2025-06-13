@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Category>
+﻿@model IEnumerable<CategoryListVm>
 @if (TempData["success"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -21,7 +21,9 @@
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
-            <th>Category Name</th>
+            <th>
+                <label asp-for="@Model.First().CategoryName"></label>
+            </th>
         </tr>
     </thead>
     <tbody>
