@@ -36,7 +36,11 @@ namespace BookShop2025.Web.Controllers
                         TempData["success"] = "Register Successfully Added";
                         return RedirectToAction("Index");
                     }
-                    return View(category);
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, errors.First());
+                    }
+                    return View(categoryVm);
                 }
                 catch (Exception ex)
                 {

@@ -21,9 +21,18 @@ namespace BookShop2025.Service.Services
         public bool Save(Category category, out List<string> errors)
         {
             errors = new List<string>();
-            _unitOfWork.Categories.Add(category);
-            int rowsAffected = _unitOfWork.Complete();
-            return rowsAffected > 0;
+            if (!_unitOfWork.Categories.Exist(category))
+            {
+                _unitOfWork.Categories.Add(category);
+                int rowsAffected = _unitOfWork.Complete();
+                return rowsAffected > 0;
+
+            }
+            else
+            {
+                errors.Add("Category Already Exist!!");
+                return false;
+            } 
         }
     }
 }

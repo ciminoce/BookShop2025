@@ -29,7 +29,10 @@ namespace BookShop2025.Data.Repositories
 
         public bool Exist(Category category)
         {
-            throw new NotImplementedException();
+            return category.CategoryId == 0
+                ? _dbContext.Categories.Any(c => c.CategoryName == category.CategoryName)
+                : _dbContext.Categories.Any(c => c.CategoryName == category.CategoryName &&
+                    c.CategoryId != category.CategoryId);
         }
 
         public IEnumerable<Category> GetAll()
