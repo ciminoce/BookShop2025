@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BookShop2025.Data.Interfaces;
-using BookShop2025.Entities.Entities;
+using BookShop2025.Service.DTOs.Category;
 using BookShop2025.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ namespace BookShop2025.Web.Controllers
         public IActionResult Index()
         {
             var categoriesDto = _categoryService.GetAll();
-            var categoriesVm=_mapper.Map<List<CategoryListVm>>(categoriesDto);
+            var categoriesVm = _mapper.Map<List<CategoryListVm>>(categoriesDto);
             return View(categoriesVm);
         }
         public IActionResult Create()
@@ -27,14 +27,14 @@ namespace BookShop2025.Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(CatetoryEditVm categoryVm)
+        public IActionResult Create(CategoryEditVm categoryVm)
         {
             if (ModelState.IsValid)
             {
-                Category category = new Category { CategoryName = categoryVm.CategoryName };
+                CategoryEditDto categoryDto = _mapper.Map<CategoryEditDto>(categoryVm);
                 try
                 {
-                    if (_categoryService.Save(category, out var errors))
+                    if (_categoryService.Save(categoryDto, out var errors))
                     {
                         TempData["success"] = "Register Successfully Added";
                         return RedirectToAction("Index");
@@ -48,7 +48,7 @@ namespace BookShop2025.Web.Controllers
                 catch (Exception ex)
                 {
 
-                    throw;
+                    ModelState.AddModelError(string.Empty, "F!ck!! Something Happen" + ex.Message);
                 }
 
             }

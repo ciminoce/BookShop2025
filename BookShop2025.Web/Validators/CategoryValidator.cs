@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace BookShop2025.Web.Validators
 {
-    public class CategoryValidator : AbstractValidator<CatetoryEditVm>
+    public class CategoryValidator : AbstractValidator<CategoryEditVm>
     {
         public CategoryValidator()
         {

@@ -23,9 +23,10 @@ namespace BookShop2025.Service.Services
             return _mapper.Map<List<CategoryListDto>>(categories);
         }
 
-        public bool Save(Category category, out List<string> errors)
+        public bool Save(CategoryEditDto categoryDto, out List<string> errors)
         {
             errors = new List<string>();
+            Category category = _mapper.Map<Category>(categoryDto);
             if (!_unitOfWork.Categories.Exist(category))
             {
                 _unitOfWork.Categories.Add(category);

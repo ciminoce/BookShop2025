@@ -6,7 +6,7 @@ namespace BookShop2025.Data.Interfaces
     public interface ICategoryService
     {
         IEnumerable<CategoryListDto> GetAll();
-        bool Save(Category category, out List<string> errors);
+        bool Save(CategoryEditDto categoryDto, out List<string> errors);
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace BookShop2025.Web.ViewModels.Category
 {
-    public class CatetoryEditVm
+    public class CategoryEditVm
     {
         public int CategoryId { get; set; }
         [DisplayName("Category Name")]
