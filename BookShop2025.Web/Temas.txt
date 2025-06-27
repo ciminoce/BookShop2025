@@ -1,11 +1,4 @@
-﻿Cambiar el UnitOfWork
-Agregar el atributo IsActive en Category
-Mostrar Badge (Bootstrap)
-Ajustar Vista Index==><div class="w-75 mx-auto">
-                       {poner el contenido}
-                       </div>
-                   ==> Agregar Alert para errores
-Ajustar Vista Create 
+﻿Ajustar Vista Create 
 Agregar @Html.AntiForgeryToken()
 TextArea==>style="width: 100%; height: 150px; resize: none;"
 IsActive==><div class="form-group form-check">

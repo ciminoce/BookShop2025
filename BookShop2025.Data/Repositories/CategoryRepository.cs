@@ -1,5 +1,6 @@
 ﻿using BookShop2025.Data.Interfaces;
 using BookShop2025.Entities.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookShop2025.Data.Repositories
 {
@@ -17,14 +18,27 @@ namespace BookShop2025.Data.Repositories
             _dbContext.Categories.Add(category);
         }
 
-        public void Delete(Category category)
+        public void Remove(int id)
         {
-            throw new NotImplementedException();
+            //TODO: Ver luego cuando esté relacionada
+            var categoryInDb = GetById(id);
+            if (categoryInDb is not null)
+            {
+                _dbContext.Entry(categoryInDb).State = EntityState.Deleted;
+            }
         }
 
-        public void Edit(Category category)
+        public void Update(Category category)
         {
-            throw new NotImplementedException();
+            var categoryInDb=GetById(category.CategoryId);
+            if (categoryInDb != null)
+            {
+                categoryInDb.CategoryName = category.CategoryName;
+                categoryInDb.Description = category.Description;
+                categoryInDb.IsActive = category.IsActive;
+
+                _dbContext.Entry(categoryInDb).State=EntityState.Modified;
+            }
         }
 
         public bool Exist(Category category)
@@ -35,14 +49,18 @@ namespace BookShop2025.Data.Repositories
                     c.CategoryId != category.CategoryId);
         }
 
-        public IEnumerable<Category> GetAll()
+        public IQueryable<Category> GetAll()
         {
-            return _dbContext.Categories.ToList();
+            return _dbContext.Categories
+                .AsNoTracking();
+                
         }
 
         public Category? GetById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Categories
+                .AsNoTracking()
+                .FirstOrDefault(c => c.CategoryId == id);
         }
     }
 }

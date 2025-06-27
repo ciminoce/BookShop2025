@@ -16,7 +16,7 @@ namespace BookShop2025.Ioc
             {
                 options.UseSqlServer(configuration.GetConnectionString("MyConnection"));
             });
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            //services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

@@ -14,7 +14,7 @@ namespace BookShop2025.Service.Mapping
         private void LoadCategoryMapping()
         {
             CreateMap<Category, CategoryListDto>();
-            CreateMap<CategoryEditDto, Category>();
+            CreateMap<Category, CategoryEditDto>().ReverseMap();
         }
     }
 }

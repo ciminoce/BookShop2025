@@ -4,12 +4,12 @@ namespace BookShop2025.Data.Interfaces
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> GetAll();
+        IQueryable<Category> GetAll();
         Category? GetById(int id);
         void Add(Category category);
         bool Exist(Category category);
-        void Edit(Category category);
-        void Delete(Category category);
+        void Update(Category category);
+        void Remove(int id);
 
     }
 
