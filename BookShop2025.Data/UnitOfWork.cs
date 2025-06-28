@@ -7,6 +7,7 @@ namespace BookShop2025.Data
     {
         private readonly BookShopDbContext _dbContext;
         private ICategoryRepository _categories;
+        private ICountryRepository _countries;
         public UnitOfWork(BookShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -18,6 +19,16 @@ namespace BookShop2025.Data
 
                 _categories ??= new CategoryRepository(_dbContext);
                 return _categories;
+            }
+        
+        
+        }
+        public ICountryRepository Countries 
+        {
+            get {
+
+                _countries ??= new CountryRepository(_dbContext);
+                return _countries;
             }
         
         
