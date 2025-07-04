@@ -20,24 +20,23 @@ namespace BookShop2025.Data.Repositories
 
         public void Remove(int id)
         {
-            //TODO: Ver luego cuando esté relacionada
-            var authorInDb = GetById(id);
+            var authorInDb = GetById(id, tracked:true);
             if (authorInDb is not null)
             {
-                _dbContext.Entry(authorInDb).State = EntityState.Deleted;
+                _dbContext.Authors.Remove(authorInDb);
             }
         }
 
         public void Update(Author author)
         {
-            var authorInDb = GetById(author.AuthorId);
+            var authorInDb = GetById(author.AuthorId,tracked:true);
             if (authorInDb != null)
             {
                 authorInDb.FirstName = author.FirstName;
                 authorInDb.LastName = author.LastName;
                 authorInDb.CountryId = author.CountryId;
+                authorInDb.Country = null;
 
-                _dbContext.Entry(authorInDb).State = EntityState.Modified;
             }
         }
 
@@ -55,16 +54,21 @@ namespace BookShop2025.Data.Repositories
 
         public IQueryable<Author> GetAll()
         {
-            return _dbContext.Authors
+            return _dbContext.Authors.Include(a=>a.Country)
                 .AsNoTracking();
 
         }
 
-        public Author? GetById(int id)
+        public Author? GetById(int id, bool tracked = false)
         {
-            return _dbContext.Authors
+            if (tracked)
+            {
+                return _dbContext.Authors.Include(a => a.Country)
+                    .FirstOrDefault(a => a.AuthorId == id);
+            }
+            return _dbContext.Authors.Include(a => a.Country)
                 .AsNoTracking()
-                .FirstOrDefault(c => c.AuthorId == id);
+                .FirstOrDefault(a => a.AuthorId == id);
         }
     }
 }

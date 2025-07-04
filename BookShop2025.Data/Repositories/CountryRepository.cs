@@ -49,7 +49,8 @@ namespace BookShop2025.Data.Repositories
         public IQueryable<Country> GetAll()
         {
 
-            IQueryable<Country> query=_dbContext.Countries.AsNoTracking();
+            IQueryable<Country> query=_dbContext.Countries.AsNoTracking()
+                .OrderBy(c=>c.CountryName);
             return query;
         }
 

@@ -5,7 +5,7 @@ namespace BookShop2025.Data.Interfaces
     public interface IAuthorRepository
     {
         IQueryable<Author> GetAll();
-        Author? GetById(int id);
+        Author? GetById(int id, bool tracked=false);
         void Add(Author author);
         bool Exist(Author author);
         void Update(Author author);

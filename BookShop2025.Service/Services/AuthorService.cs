@@ -23,9 +23,9 @@ namespace BookShop2025.Service.Services
             return _mapper.ProjectTo<AuthorListDto>(authors);
         }
 
-        public AuthorEditDto? GetById(int id)
+        public AuthorEditDto? GetById(int id, bool tracked = false)
         {
-            var author = _unitOfWork.Authors.GetById(id);
+            var author = _unitOfWork.Authors.GetById(id,true);
             if (author is null) return null;
             return _mapper.Map<AuthorEditDto>(author);
         }
@@ -33,7 +33,7 @@ namespace BookShop2025.Service.Services
         public bool Remove(int id, out List<string> errors)
         {
             errors = new List<string>();
-            var author = _unitOfWork.Authors.GetById(id);
+            var author = _unitOfWork.Authors.GetById(id,true);
             if (author is null)
             {
                 errors.Add("Author does not exist");

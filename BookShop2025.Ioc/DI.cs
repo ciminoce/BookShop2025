@@ -19,7 +19,7 @@ namespace BookShop2025.Ioc
             //services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICountryService, CountryService>();
-
+            services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services.BuildServiceProvider();

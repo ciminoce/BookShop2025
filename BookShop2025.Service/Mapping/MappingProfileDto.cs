@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookShop2025.Entities.Entities;
+using BookShop2025.Service.DTOs.Author;
 using BookShop2025.Service.DTOs.Category;
 using BookShop2025.Service.DTOs.Country;
 
@@ -11,6 +12,15 @@ namespace BookShop2025.Service.Mapping
         {
             LoadCategoryMapping();
             LoadCountryMapping();
+            LoadAuthorMapping();
+        }
+
+        private void LoadAuthorMapping()
+        {
+            CreateMap<Author, AuthorListDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
+                .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country!.CountryName));
+            CreateMap<Author, AuthorEditDto>().ReverseMap();
         }
 
         private void LoadCountryMapping()
