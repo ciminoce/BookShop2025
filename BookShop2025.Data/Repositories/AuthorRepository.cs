@@ -30,30 +30,34 @@ namespace BookShop2025.Data.Repositories
 
         public void Update(Author author)
         {
-            var authorInDb=GetById(author.AuthorId);
+            var authorInDb = GetById(author.AuthorId);
             if (authorInDb != null)
             {
-                authorInDb.AuthorName = author.AuthorName;
-                authorInDb.Description = author.Description;
-                authorInDb.IsActive = author.IsActive;
+                authorInDb.FirstName = author.FirstName;
+                authorInDb.LastName = author.LastName;
+                authorInDb.CountryId = author.CountryId;
 
-                _dbContext.Entry(authorInDb).State=EntityState.Modified;
+                _dbContext.Entry(authorInDb).State = EntityState.Modified;
             }
         }
 
         public bool Exist(Author author)
         {
             return author.AuthorId == 0
-                ? _dbContext.Authors.Any(c => c.AuthorName == author.AuthorName)
-                : _dbContext.Authors.Any(c => c.AuthorName == author.AuthorName &&
-                    c.AuthorId != author.AuthorId);
+                ? _dbContext.Authors.Any(a => a.FirstName == author.FirstName &&
+                        a.LastName == author.LastName &&
+                        a.CountryId == author.CountryId)
+                : _dbContext.Authors.Any(a => a.FirstName == author.FirstName &&
+                        a.LastName == author.LastName &&
+                        a.CountryId == author.CountryId &&
+                        a.AuthorId != author.AuthorId);
         }
 
         public IQueryable<Author> GetAll()
         {
             return _dbContext.Authors
                 .AsNoTracking();
-                
+
         }
 
         public Author? GetById(int id)
