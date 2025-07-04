@@ -6,6 +6,7 @@ namespace BookShop2025.Data
     {
         ICategoryRepository Categories { get;  }
         ICountryRepository Countries { get; }
+        IAuthorRepository Authors { get; }
         int Complete();
     }
 }

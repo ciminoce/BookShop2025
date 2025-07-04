@@ -8,6 +8,7 @@ namespace BookShop2025.Data
         private readonly BookShopDbContext _dbContext;
         private ICategoryRepository _categories;
         private ICountryRepository _countries;
+        private IAuthorRepository _authors;
         public UnitOfWork(BookShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -33,7 +34,14 @@ namespace BookShop2025.Data
         
         
         }
-
+        public IAuthorRepository Authors
+        {
+            get
+            {
+                _authors ??= new AuthorRepository(_dbContext);
+                return _authors;
+            }
+        }
         public int Complete()
         {
             return _dbContext.SaveChanges();

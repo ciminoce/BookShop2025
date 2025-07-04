@@ -14,6 +14,7 @@ namespace BookShop2025.Data
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
     }
 }
