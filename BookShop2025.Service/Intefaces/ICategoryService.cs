@@ -7,6 +7,7 @@ namespace BookShop2025.Data.Interfaces
         IQueryable<CategoryListDto> GetAll();
         bool Save(CategoryEditDto categoryDto, out List<string> errors);
         CategoryEditDto? GetById(int id);
+        CategoryEditDto? GetByName(string name);
         bool Remove(int id, out List<string> errors);
     }
 

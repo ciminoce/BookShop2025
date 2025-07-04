@@ -25,7 +25,14 @@ namespace BookShop2025.Service.Services
 
         public CategoryEditDto? GetById(int id)
         {
-            var category = _unitOfWork.Categories.GetById(id);
+            var category = _unitOfWork.Categories.Get(filter:c=>c.CategoryId==id, tracked:true);
+            if (category is null) return null;
+            return _mapper.Map<CategoryEditDto>(category);
+        }
+
+        public CategoryEditDto? GetByName(string name)
+        {
+            var category = _unitOfWork.Categories.Get(filter: c => c.CategoryName == name, tracked: true);
             if (category is null) return null;
             return _mapper.Map<CategoryEditDto>(category);
         }
@@ -33,13 +40,13 @@ namespace BookShop2025.Service.Services
         public bool Remove(int id, out List<string> errors)
         {
             errors = new List<string>();
-            var category = _unitOfWork.Categories.GetById(id);
+            var category = _unitOfWork.Categories.Get(filter: c => c.CategoryId == id, tracked: true);
             if (category is null)
             {
                 errors.Add("Category does not exist");
                 return false;
             }
-            _unitOfWork.Categories.Remove(id);
+            _unitOfWork.Categories.Remove(category);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
 
