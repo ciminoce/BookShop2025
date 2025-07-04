@@ -47,11 +47,9 @@ namespace BookShop2025.Service.Services
             Country country = _mapper.Map<Country>(countryDto);
             int rowsAffected;
 
-            // Verificar si es una categoría existente (edición) o nueva (creación)
-            if (country.CountryId == 0) // Asumiendo que 0 significa una nueva entidad
+            if (country.CountryId == 0) 
             {
-                // Lógica para AGREGAR (Crear)
-                if (!_unitOfWork.Countries.Exist(country)) // Verifica si ya existe una categoría con el mismo nombre, por ejemplo
+                if (!_unitOfWork.Countries.Exist(country)) 
                 {
                     _unitOfWork.Countries.Add(country);
                     rowsAffected = _unitOfWork.Complete();
@@ -59,7 +57,7 @@ namespace BookShop2025.Service.Services
                 }
                 else
                 {
-                    errors.Add("Country with this name already exists."); // Mensaje más específico
+                    errors.Add("Country with this name already exists."); 
                     return false;
                 }
             }
@@ -67,8 +65,7 @@ namespace BookShop2025.Service.Services
             {
 
 
-                // Lógica para EDITAR (editar)
-                if (!_unitOfWork.Countries.Exist(country)) // Verifica si ya existe una categoría con el mismo nombre, por ejemplo
+                if (!_unitOfWork.Countries.Exist(country)) 
                 {
                     _unitOfWork.Countries.Update(country);
                     rowsAffected = _unitOfWork.Complete();
@@ -76,7 +73,7 @@ namespace BookShop2025.Service.Services
                 }
                 else
                 {
-                    errors.Add("Country with this name already exists."); // Mensaje más específico
+                    errors.Add("Country with this name already exists."); 
                     return false;
                 }
             }
