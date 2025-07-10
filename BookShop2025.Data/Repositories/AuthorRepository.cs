@@ -35,7 +35,7 @@ namespace BookShop2025.Data.Repositories
                 authorInDb.FirstName = author.FirstName;
                 authorInDb.LastName = author.LastName;
                 authorInDb.CountryId = author.CountryId;
-                authorInDb.Country = null;
+                //authorInDb.Country = null;
 
             }
         }

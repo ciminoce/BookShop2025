@@ -15,7 +15,9 @@
         </div>
         <div class="mb-3 row p-1">
             <label class="p-0" asp-for="Description"></label>
-            <textarea class="form-control" asp-for="Description" style="width:100%; height:10"></textarea>
+            <textarea class="form-control"
+                      asp-for="Description"
+                      style="width:100%;height: 150px; resize: none;"></textarea>
             <span class="text-danger" asp-validation-for="Description"></span>
 
         </div>

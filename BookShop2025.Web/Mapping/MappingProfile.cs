@@ -2,9 +2,11 @@
 using BookShop2025.Service.DTOs.Author;
 using BookShop2025.Service.DTOs.Category;
 using BookShop2025.Service.DTOs.Country;
+using BookShop2025.Service.DTOs.Publisher;
 using BookShop2025.Web.ViewModels.Author;
 using BookShop2025.Web.ViewModels.Category;
 using BookShop2025.Web.ViewModels.Country;
+using BookShop2025.Web.ViewModels.Publisher;
 
 namespace BookShop2025.Web.Mapping
 {
@@ -15,6 +17,15 @@ namespace BookShop2025.Web.Mapping
             LoadCategoryMapping();
             LoadCountryMapping();
             LoadAuthorMapping();
+            LoadPublisherMapping();
+        }
+
+        private void LoadPublisherMapping()
+        {
+            CreateMap<PublisherListDto, PublisherListVm>();
+            CreateMap<PublisherEditDto, PublisherEditVm>().ReverseMap();
+            CreateMap<PublisherEditDto, PublisherListVm>();
+                
         }
 
         private void LoadAuthorMapping()

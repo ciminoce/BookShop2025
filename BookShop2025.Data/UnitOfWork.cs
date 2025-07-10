@@ -9,6 +9,7 @@ namespace BookShop2025.Data
         private ICategoryRepository _categories;
         private ICountryRepository _countries;
         private IAuthorRepository _authors;
+        private IPublisherRepository _publishers;
         public UnitOfWork(BookShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -42,6 +43,15 @@ namespace BookShop2025.Data
                 return _authors;
             }
         }
+        public IPublisherRepository Publishers
+        {
+            get
+            {
+                _publishers ??= new PublisherRepository(_dbContext);
+                return _publishers;
+            }
+        }
+
         public int Complete()
         {
             return _dbContext.SaveChanges();
