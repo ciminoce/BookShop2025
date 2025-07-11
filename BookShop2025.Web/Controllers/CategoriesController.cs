@@ -69,11 +69,15 @@ namespace BookShop2025.Web.Controllers
             }
             return View(categoryVm);
         }
-        public IActionResult Edit(int? id)
+        public IActionResult Upsert(int? id)
         {
             if(id is null || id == 0)
             {
-                return NotFound();
+                var model = new CategoryEditVm()
+                {
+                    CategoryId = 0
+                };
+                return View(model);
             }
             try
             {
@@ -94,7 +98,7 @@ namespace BookShop2025.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(CategoryEditVm categoryVm)
+        public IActionResult Upsert(CategoryEditVm categoryVm)
         {
             if (ModelState.IsValid)
             {

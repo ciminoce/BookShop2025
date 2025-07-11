@@ -1,10 +1,10 @@
 ﻿@model CategoryEditVm
 <form method="post">
     @Html.AntiForgeryToken();
-    <input type="hidden"asp-for="CategoryId" />
+    <input type="hidden" asp-for="CategoryId" />
     <div class="border p-3 m-4 w-75 mx-auto">
         <div class="row pb-2">
-            <h2 class="text-primary">Update Category</h2>
+            <h2 class="text-primary">@(Model.CategoryId==0?"Add Category":"Update Category")</h2>
             <hr />
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -26,11 +26,22 @@
             <label class="form-check-label" asp-for="IsActive"></label>
 
         </div>
+        @if (Model.CategoryId == 0)
+        {
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Save
+            </button>
 
-        <button class="btn btn-warning" type="submit">
-            <i class="bi bi-floppy2-fill"></i>
-            Update
-        </button>
+        }
+        else
+        {
+            <button class="btn btn-warning" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Update
+            </button>
+
+        }
         <a class="btn btn-success" asp-controller="Categories" asp-action="Index">
             <i class="bi bi-backspace"></i>
             Back to List
