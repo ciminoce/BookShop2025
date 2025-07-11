@@ -1,14 +1,13 @@
 ﻿using BookShop2025.Data.Interfaces;
 using BookShop2025.Entities.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookShop2025.Data.Repositories
 {
-    public class CategoryRepository :GenericRepository<Category>, ICategoryRepository
+    public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
     {
         private readonly BookShopDbContext _dbContext;
 
-        public CategoryRepository(BookShopDbContext dbContext):base(dbContext)
+        public CategoryRepository(BookShopDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
@@ -16,8 +15,8 @@ namespace BookShop2025.Data.Repositories
 
         public void Update(Category category)
         {
-            var categoryInDb=Get(filter:c=>c.CategoryId==category.CategoryId,
-                   tracked:true);
+            var categoryInDb = Get(filter: c => c.CategoryId == category.CategoryId,
+                   tracked: true);
             if (categoryInDb != null)
             {
                 categoryInDb.CategoryName = category.CategoryName;

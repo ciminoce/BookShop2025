@@ -4,37 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookShop2025.Data.Repositories
 {
-    public class CountryRepository : ICountryRepository
+    public class CountryRepository :GenericRepository<Country>, ICountryRepository
     {
         private readonly BookShopDbContext _dbContext;
 
-        public CountryRepository(BookShopDbContext dbContext)
+        public CountryRepository(BookShopDbContext dbContext):base(dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public void Add(Country country)
-        {
-            _dbContext.Countries.Add(country);
-        }
-
-        public void Remove(int id)
-        {
-            var countryInDb = GetById(id);
-            if (countryInDb != null)
-            {
-                _dbContext.Entry(countryInDb).State = EntityState.Deleted;
-            }
-        }
 
         public void Update(Country country)
         {
-            var countryInDb=GetById(country.CountryId);
+            var countryInDb=Get(filter:c=>c.CountryId==country.CountryId, tracked:true);
             if (countryInDb != null)
             {
                 countryInDb.CountryName = country.CountryName;
 
-                _dbContext.Entry(countryInDb).State = EntityState.Modified;
             }
         }
 
@@ -46,18 +32,5 @@ namespace BookShop2025.Data.Repositories
                     c.CountryId != country.CountryId);
         }
 
-        public IQueryable<Country> GetAll()
-        {
-
-            IQueryable<Country> query=_dbContext.Countries.AsNoTracking()
-                .OrderBy(c=>c.CountryName);
-            return query;
-        }
-
-        public Country? GetById(int id)
-        {
-            return _dbContext.Countries.AsNoTracking()
-                .FirstOrDefault(c=>c.CountryId==id);
-        }
     }
 }

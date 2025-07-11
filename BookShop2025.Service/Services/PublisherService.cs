@@ -25,7 +25,7 @@ namespace BookShop2025.Service.Services
 
         public PublisherEditDto? GetById(int id, bool tracked = false)
         {
-            var publisher = _unitOfWork.Publishers.GetById(id,true);
+            var publisher = _unitOfWork.Publishers.Get(filter:p=>p.PublisherId==id,tracked: true);
             if (publisher is null) return null;
             return _mapper.Map<PublisherEditDto>(publisher);
         }
@@ -33,13 +33,13 @@ namespace BookShop2025.Service.Services
         public bool Remove(int id, out List<string> errors)
         {
             errors = new List<string>();
-            var publisher = _unitOfWork.Publishers.GetById(id,true);
+            var publisher = _unitOfWork.Publishers.Get(filter:p=>p.PublisherId==id,tracked: true);
             if (publisher is null)
             {
                 errors.Add("Publisher does not exist");
                 return false;
             }
-            _unitOfWork.Publishers.Remove(id);
+            _unitOfWork.Publishers.Remove(publisher);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
 

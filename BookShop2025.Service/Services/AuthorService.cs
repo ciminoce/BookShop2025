@@ -25,7 +25,7 @@ namespace BookShop2025.Service.Services
 
         public AuthorEditDto? GetById(int id, bool tracked = false)
         {
-            var author = _unitOfWork.Authors.GetById(id,true);
+            var author = _unitOfWork.Authors.Get(filter:a=>a.AuthorId==id,tracked:true);
             if (author is null) return null;
             return _mapper.Map<AuthorEditDto>(author);
         }
@@ -33,13 +33,13 @@ namespace BookShop2025.Service.Services
         public bool Remove(int id, out List<string> errors)
         {
             errors = new List<string>();
-            var author = _unitOfWork.Authors.GetById(id,true);
+            var author = _unitOfWork.Authors.Get(filter: a => a.AuthorId == id, tracked: true);
             if (author is null)
             {
                 errors.Add("Author does not exist");
                 return false;
             }
-            _unitOfWork.Authors.Remove(id);
+            _unitOfWork.Authors.Remove(author);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
 

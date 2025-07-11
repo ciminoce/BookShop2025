@@ -20,12 +20,12 @@ namespace BookShop2025.Service.Services
         public bool Remove(int id, out List<string> errors)
         {
             errors = new List<string>();
-            Country? country = _unitOfWork.Countries.GetById(id);
+            Country? country = _unitOfWork.Countries.Get(filter:c=>c.CountryId==id,tracked:true);
             if (country == null)
             {
                 errors.Add("Countries does not exist!!!");
             }
-            _unitOfWork.Countries.Remove(id);
+            _unitOfWork.Countries.Remove(country!);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
         }
@@ -37,7 +37,7 @@ namespace BookShop2025.Service.Services
 
         public CountryEditDto GetById(int id)
         {
-            var country = _unitOfWork.Countries.GetById(id);
+            var country = _unitOfWork.Countries.Get(filter: c => c.CountryId == id);
             return _mapper.Map<CountryEditDto>(country);
         }
 
