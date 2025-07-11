@@ -9,12 +9,49 @@
 
         </div>
         <div class="col-6 text-end">
-            <a class="btn btn-primary" asp-controller="Authors" asp-action="Create">
+            <a class="btn btn-primary" asp-controller="Authors" asp-action="Upsert">
                 <i class="bi bi-plus-circle"></i>
                 Create New Author
             </a>
         </div>
     </div>
+    <form method="get" asp-action="Index" asp-controller="Authors" class="mb-3">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <label>Enter text:</label>
+            </div>
+            <div class="col-6">
+                <input type="text" id="searchText" name="searchText" class="form-control" value="@(ViewBag.CurrentSearchText != null ? ViewBag.CurrentSearchText : "")">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">
+                    Search
+                </button>
+            </div>
+            <div class="col-auto">
+                <div class="col-auto">
+                    <a href="@Url.Action("Index", "Authors")" class="btn btn-success">Clear</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="row align-items-center mt-3">
+            <div class="col-auto">
+                <label for="sortBy">Sort by:</label>
+            </div>
+            <div class="col-4">
+                <select id="sortBy" name="sortBy" class="form-select">
+                    <option value="author" selected=@(ViewBag.CurrentSortBy == "author")>Author</option>
+                    <option value="country" selected=@(ViewBag.CurrentSortBy == "country")>Country</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-info" name="action" value="sort">
+                    Sort
+                </button>
+            </div>
+        </div>
+    </form>
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
@@ -42,40 +79,67 @@
                         @item.CountryName
                     </td>
                     <td>
-                        <a class="btn btn-warning" asp-controller="Authors" asp-action="Edit" asp-route-id="@item.AuthorId">
+                        <a class="btn btn-warning" asp-controller="Authors" asp-action="Upsert" asp-route-id="@item.AuthorId">
                             <i class="bi bi-pencil-fill"></i>
                             Edit
                         </a>
-                        <a class="btn btn-danger" asp-controller="Authors" asp-action="Delete" asp-route-id="@item.AuthorId">
+                        <button type="button" class="btn btn-danger" onclick="confirmarBaja(@item.AuthorId, '@item.FullName')">
                             <i class="bi bi-trash"></i>
-                            Delete
-                        </a>
+                            Eliminar
+                        </button>
+
+                        <!-- Formulario oculto para submit POST -->
+                        <form id="formDelete-@item.AuthorId" method="post" asp-action="Delete" style="display: none;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.AuthorId" />
+                        </form>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-@Html.PagedListPager(
-Model,
-page => Url.Action("Index", new { page }),
-    new PagedListRenderOptions
-    {
-        LiElementClasses = new[] { "page-item" },
-        PageClasses = new[] { "page-link" },
-        UlElementClasses = new[] { "pagination", "justify-content-center" },
+    @Html.PagedListPager(
+    Model,
+    page => Url.Action("Index", new { page }),
+        new PagedListRenderOptions
+        {
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+            UlElementClasses = new[] { "pagination", "justify-content-center" },
 
-        LinkToFirstPageFormat = "<i class='bi bi-chevron-double-left'></i>",
-        LinkToPreviousPageFormat = "<i class='bi bi-chevron-left'></i>",
-        LinkToNextPageFormat = "<i class='bi bi-chevron-right'></i>",
-        LinkToLastPageFormat = "<i class='bi bi-chevron-double-right'></i>",
+            LinkToFirstPageFormat = "<i class='bi bi-chevron-double-left'></i>",
+            LinkToPreviousPageFormat = "<i class='bi bi-chevron-left'></i>",
+            LinkToNextPageFormat = "<i class='bi bi-chevron-right'></i>",
+            LinkToLastPageFormat = "<i class='bi bi-chevron-double-right'></i>",
 
-        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-        DisplayLinkToNextPage = PagedListDisplayMode.Always,
-        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
 
-        DisplayLinkToIndividualPages = true,
-        MaximumPageNumbersToDisplay = 5
-    }
-    )
+            DisplayLinkToIndividualPages = true,
+            MaximumPageNumbersToDisplay = 5
+        }
+        )
 </div>
+@section Scripts {
+
+    <script>
+        function confirmarBaja(id, name){
+            Swal.fire({
+              title: "Remove an Author",
+              html: `Are you sure to remove the author "<strong>${name}</strong>?"`,                 icon: "warning",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                   document.getElementById(`formDelete-${id}`).submit();
+
+              }
+            });
+        };
+    </script>
+}

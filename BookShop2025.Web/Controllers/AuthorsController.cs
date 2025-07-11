@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using BookShop2025.Data.Interfaces;
 using BookShop2025.Service.DTOs.Author;
-using BookShop2025.Service.DTOs.Author;
-using BookShop2025.Service.DTOs.Author;
-using BookShop2025.Service.Services;
-using BookShop2025.Web.ViewModels.Author;
-using BookShop2025.Web.ViewModels.Author;
 using BookShop2025.Web.ViewModels.Author;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -44,55 +39,15 @@ namespace BookShop2025.Web.Controllers
 
             return View(viewModelPagedList);
         }
-        public IActionResult Create()
-        {
-            var viewModel = new AuthorEditVm()
-            {
-                Countries = GetCountries()
-            };
-            return View(viewModel);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(AuthorEditVm authorVm)
-        {
-
-            if (ModelState.IsValid)
-            {
-                AuthorEditDto authorDto = _mapper.Map<AuthorEditDto>(authorVm);
-
-                try
-                {
-                    if (_authorService.Save(authorDto, out var errors))
-                    {
-                        TempData["success"] = "Register Successfully Added";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, errors.First());
-                        authorVm.Countries = GetCountries();
-
-                    }
-                    return View(authorVm);
-                }
-                catch (Exception ex)
-                {
-                    authorVm.Countries = GetCountries();
-
-                    ModelState.AddModelError(string.Empty, "F!ck!! Something Happen" + ex.Message);
-                }
-
-            }
-            authorVm.Countries = GetCountries();
-
-            return View(authorVm);
-        }
-        public IActionResult Edit(int? id)
+        public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)
             {
-                return NotFound();
+                var viewModel = new AuthorEditVm()
+                {
+                    Countries = GetCountries()
+                };
+                return View(viewModel);
             }
             try
             {
@@ -114,7 +69,7 @@ namespace BookShop2025.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(AuthorEditVm authorVm)
+        public IActionResult Upsert(AuthorEditVm authorVm)
         {
             if (ModelState.IsValid)
             {
