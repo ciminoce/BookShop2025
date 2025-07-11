@@ -15,6 +15,30 @@
             </a>
         </div>
     </div>
+    <form method="get" asp-action="Index" asp-controller="Categories" class="mb-3">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <label for="statusFilter">Select</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select" id="statusFilter" name="statusFilter">
+                    <option value="All" selected="@(ViewBag.CurrentStatusFilter=="All")">All</option>
+                    <option value="Active" selected="@(ViewBag.CurrentStatusFilter == "Active")">Active</option>
+                    <option value="Inactive" selected="@(ViewBag.CurrentStatusFilter == "Inactive")">Inactive</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">
+                    Apply Filter
+                </button>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-success" href="@Url.Action("Index","Categories")">
+                    Clear
+                </a>
+            </div>
+        </div>
+    </form>
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
@@ -68,7 +92,7 @@
     </table>
     @Html.PagedListPager(
     Model,
-    page => Url.Action("Index", new { page }),
+    page => Url.Action("Index", new { page, statusFilter=ViewBag.CurrentStatusFilter }),
         new PagedListRenderOptions
         {
             LiElementClasses = new[] { "page-item" },

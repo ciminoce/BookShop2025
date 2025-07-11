@@ -18,12 +18,12 @@ namespace BookShop2025.Web.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index(int? page, int? pageSize)
+        public IActionResult Index(int? page, int? pageSize, string? statusFilter)
         {
             int pageNumber = page ?? 1;
             int registerPerPage = pageSize ?? 5;
 
-            var categoriesDto = _categoryService.GetAll();
+            var categoriesDto = _categoryService.GetAll(statusFilter);
             var pagedListDto = categoriesDto.ToPagedList(pageNumber, registerPerPage);
             var viewModelList = _mapper.Map<List<CategoryListVm>>(pagedListDto); // Mapea en memoria
 
@@ -33,7 +33,7 @@ namespace BookShop2025.Web.Controllers
                 pagedListDto.PageSize,
                 pagedListDto.TotalItemCount
             );
-
+            ViewBag.CurrentStatusFilter=statusFilter;
             return View(viewModelPagedList);
         }
         public IActionResult Create()

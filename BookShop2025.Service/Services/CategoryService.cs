@@ -3,6 +3,7 @@ using BookShop2025.Data;
 using BookShop2025.Data.Interfaces;
 using BookShop2025.Entities.Entities;
 using BookShop2025.Service.DTOs.Category;
+using System.Linq.Expressions;
 
 namespace BookShop2025.Service.Services
 {
@@ -17,9 +18,26 @@ namespace BookShop2025.Service.Services
             _mapper = mapper;
         }
 
-        public IQueryable<CategoryListDto> GetAll()
+        public IQueryable<CategoryListDto> GetAll(string? statusFilter)
         {
-            var categories= _unitOfWork.Categories.GetAll();
+            Expression<Func<Category, bool>>? filterCategory=null;
+            switch (statusFilter)
+            {
+                case null:
+                case "All":
+                    filterCategory = null;
+                    break;
+                case "Active":
+                    filterCategory = c => c.IsActive;
+                    break;
+                case "Inactive":
+                    filterCategory = c => !c.IsActive;
+                    break;
+
+                default:
+                    break;
+            }
+            var categories= _unitOfWork.Categories.GetAll(filter:filterCategory);
             return _mapper.ProjectTo<CategoryListDto>(categories);
         }
 
