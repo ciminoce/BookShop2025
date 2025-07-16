@@ -8,6 +8,7 @@ namespace BookShop2025.Data
         ICountryRepository Countries { get; }
         IAuthorRepository Authors { get; }
         IPublisherRepository Publishers { get; }
+        ILanguageRepository Languages { get; }
         int Complete();
     }
 }

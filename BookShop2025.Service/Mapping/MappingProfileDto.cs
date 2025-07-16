@@ -3,6 +3,7 @@ using BookShop2025.Entities.Entities;
 using BookShop2025.Service.DTOs.Author;
 using BookShop2025.Service.DTOs.Category;
 using BookShop2025.Service.DTOs.Country;
+using BookShop2025.Service.DTOs.Language;
 using BookShop2025.Service.DTOs.Publisher;
 
 namespace BookShop2025.Service.Mapping
@@ -15,6 +16,13 @@ namespace BookShop2025.Service.Mapping
             LoadCountryMapping();
             LoadAuthorMapping();
             LoadPublisherMapping();
+            LoadLanguageMapping();
+        }
+
+        private void LoadLanguageMapping()
+        {
+            CreateMap<Language, LanguageListDto>();
+            CreateMap<Language, LanguageEditDto>().ReverseMap();
         }
 
         private void LoadPublisherMapping()

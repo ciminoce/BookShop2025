@@ -1,5 +1,7 @@
 ﻿using BookShop2025.Data;
 using BookShop2025.Data.Interfaces;
+using BookShop2025.Entities.Entities;
+using BookShop2025.Service.Intefaces;
 using BookShop2025.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,7 @@ namespace BookShop2025.Ioc
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped<IPublisherService, PublisherService>();
+            services.AddScoped<ILanguageService, LanguageService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

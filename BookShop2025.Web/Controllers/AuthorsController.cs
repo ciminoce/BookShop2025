@@ -21,12 +21,13 @@ namespace BookShop2025.Web.Controllers
             _countryService = countryService;
         }
 
-        public IActionResult Index(int? page, int? pageSize)
+        public IActionResult Index(int? page, int? pageSize,
+            string? searchText, string? orderAuthors)
         {
             int pageNumber = page ?? 1;
             int registerPerPage = pageSize ?? 5;
-
-            var authorsDto = _authorService.GetAll();
+            orderAuthors = orderAuthors ?? "Author";
+            var authorsDto = _authorService.GetAll(searchText,orderAuthors);
             var pagedListDto = authorsDto.ToPagedList(pageNumber, registerPerPage);
             var viewModelList = _mapper.Map<List<AuthorListVm>>(pagedListDto); // Mapea en memoria
 
@@ -36,7 +37,8 @@ namespace BookShop2025.Web.Controllers
                 pagedListDto.PageSize,
                 pagedListDto.TotalItemCount
             );
-
+            ViewBag.CurrentSearchText=searchText;
+            ViewBag.CurrentOrderAuthors=orderAuthors;
             return View(viewModelPagedList);
         }
         public IActionResult Upsert(int? id)

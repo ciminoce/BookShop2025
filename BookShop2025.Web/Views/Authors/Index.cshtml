@@ -15,43 +15,29 @@
             </a>
         </div>
     </div>
-    <form method="get" asp-action="Index" asp-controller="Authors" class="mb-3">
-        <div class="row align-items-center">
-            <div class="col-auto">
-                <label>Enter text:</label>
+    <form method="get" asp-action="Index" asp-controller="Authors" class="mb-4 p-3 border rounded shadow-sm bg-light">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-5 col-lg-4">
+                <label for="searchText" class="form-label mb-0">Search Text</label>
+                <input type="text" class="form-control" id="searchText" name="searchText" value="@(ViewBag.CurrentSearchText ?? "")" placeholder="Enter author name or part of it" />
             </div>
-            <div class="col-6">
-                <input type="text" id="searchText" name="searchText" class="form-control" value="@(ViewBag.CurrentSearchText != null ? ViewBag.CurrentSearchText : "")">
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary">
-                    Search
-                </button>
-            </div>
-            <div class="col-auto">
-                <div class="col-auto">
-                    <a href="@Url.Action("Index", "Authors")" class="btn btn-success">Clear</a>
-                </div>
-            </div>
-
-        </div>
-        <div class="row align-items-center mt-3">
-            <div class="col-auto">
-                <label for="sortBy">Sort by:</label>
-            </div>
-            <div class="col-4">
-                <select id="sortBy" name="sortBy" class="form-select">
-                    <option value="author" selected=@(ViewBag.CurrentSortBy == "author")>Author</option>
-                    <option value="country" selected=@(ViewBag.CurrentSortBy == "country")>Country</option>
+            <div class="col-md-4 col-lg-3">
+                <label for="orderAuthors" class="form-label mb-0">Order By</label>
+                <select class="form-select" id="orderAuthors" name="orderAuthors">
+                    <option value="Author" selected="@(ViewBag.CurrentOrderAuthors == "Author")">Author</option>
+                    <option value="Country" selected="@(ViewBag.CurrentOrderAuthors == "Country")">Country</option>
                 </select>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-info" name="action" value="sort">
-                    Sort
+            <div class="col-md-3 col-lg-5 d-flex align-items-end justify-content-md-start justify-content-lg-end">
+                <button type="submit" class="btn btn-primary me-2 flex-grow-1 flex-md-grow-0">
+                    <i class="bi bi-search"></i> Search / Apply Order
                 </button>
+                <a class="btn btn-secondary flex-grow-1 flex-md-grow-0" href="@Url.Action("Index", "Authors")">
+                    <i class="bi bi-arrow-clockwise"></i> Clear
+                </a>
             </div>
         </div>
-    </form>
+    </form>  
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
@@ -100,7 +86,7 @@
     </table>
     @Html.PagedListPager(
     Model,
-    page => Url.Action("Index", new { page }),
+    page => Url.Action("Index", new { page, searchText=ViewBag.CurrentSearchText, orderAuthors=ViewBag.CurrentOrderAuthors }),
         new PagedListRenderOptions
         {
             LiElementClasses = new[] { "page-item" },
