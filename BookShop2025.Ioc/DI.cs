@@ -1,6 +1,5 @@
 ﻿using BookShop2025.Data;
 using BookShop2025.Data.Interfaces;
-using BookShop2025.Entities.Entities;
 using BookShop2025.Service.Intefaces;
 using BookShop2025.Service.Services;
 using Microsoft.EntityFrameworkCore;

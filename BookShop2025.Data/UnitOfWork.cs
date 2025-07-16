@@ -10,6 +10,7 @@ namespace BookShop2025.Data
         private ICountryRepository _countries;
         private IAuthorRepository _authors;
         private IPublisherRepository _publishers;
+        private ILanguageRepository _languages;
         public UnitOfWork(BookShopDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -51,7 +52,14 @@ namespace BookShop2025.Data
                 return _publishers;
             }
         }
-
+        public ILanguageRepository Languages
+        {
+            get
+            {
+                _languages ??= new LanguageRepository(_dbContext);
+                return _languages;
+            }
+        }
         public int Complete()
         {
             return _dbContext.SaveChanges();
