@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookShop2025.Service.Intefaces;
 using BookShop2025.Web.ViewModels.Category;
+using BookShop2025.Web.ViewModels.Language;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Runtime.CompilerServices;
@@ -9,12 +10,12 @@ using X.PagedList.Extensions;
 
 namespace BookShop2025.Web.Controllers
 {
-    public class LanguageController : Controller
+    public class LanguagesController : Controller
     {
         private readonly ILanguageService _languageService;
         private readonly IMapper _mapper;
 
-        public LanguageController(ILanguageService languageService,
+        public LanguagesController(ILanguageService languageService,
             IMapper mapper)
         {
             _languageService = languageService;
@@ -28,9 +29,9 @@ namespace BookShop2025.Web.Controllers
             
             var languagesDto = _languageService.GetAll();
             var pagedListDto = languagesDto.ToPagedList(pageNumber, registerPerPage);
-            var viewModelList = _mapper.Map<List<CategoryListVm>>(pagedListDto); // Mapea en memoria
+            var viewModelList = _mapper.Map<List<LanguageListVm>>(pagedListDto); // Mapea en memoria
 
-            var viewModelPagedList = new StaticPagedList<CategoryListVm>(
+            var viewModelPagedList = new StaticPagedList<LanguageListVm>(
                 viewModelList,
                 pagedListDto.PageNumber,
                 pagedListDto.PageSize,
